@@ -141,7 +141,23 @@ public class ChatGuiClient extends Application {
             return;
         }
         textInput.clear();
-        sendMessage(new MessageCtoS_Chat(msg));
+        if (msg.toLowerCase().startsWith("/quit")) {
+            sendMessage(new MessageCtoS_Quit());
+            Platform.exit();
+        } else if (msg.toLowerCase().startsWith("/list")) {
+            sendMessage(new MessageCtoS_List());
+        } else if (msg.toLowerCase().startsWith("/private")) {
+            String[] tokens = msg.split(" ", 3);
+            if (tokens.length == 3) {
+                sendMessage(new MessageCtoS_Private(tokens[1], tokens[2]));
+                messageArea.appendText("private message to " + tokens[1] + ": " + tokens[2] + "\n");
+            }
+            else {
+                messageArea.appendText("invalid format for /private\n");
+            }
+        } else {
+            sendMessage(new MessageCtoS_Chat(msg));
+        }
     }
 
     public ObjectOutputStream getSocketOut() {
