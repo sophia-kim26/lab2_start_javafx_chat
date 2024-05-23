@@ -40,7 +40,7 @@ public class ChatGuiSocketListener implements Runnable {
                 chatGuiClient.getMessageArea().appendText(m.userName + " joined the chat!\n");
             });
             // TODO: update radio buttons
-            names.add(m.userName);
+            // names.add(m.userName);
         }
     }
 
