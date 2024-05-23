@@ -50,6 +50,14 @@ public class ChatGuiSocketListener implements Runnable {
         });
     }
 
+    private void processListMessage(MessageStoC_List m) {
+        System.out.println("current users: " + m);
+    }
+
+    private void processPrivateMessage(MessageStoC_Private m) {
+        System.out.println("private chat message from " + m);
+    }
+
     private void processExitMessage(MessageStoC_Exit m) {
         Platform.runLater(() -> {
             chatGuiClient.getMessageArea().appendText(m.userName + " has left the chat!\n");
@@ -80,6 +88,10 @@ public class ChatGuiSocketListener implements Runnable {
                     processWelcomeMessage((MessageStoC_Welcome) msg);
                 } else if (msg instanceof MessageStoC_Chat) {
                     processChatMessage((MessageStoC_Chat) msg);
+                } else if (msg instanceof MessageStoC_List) {
+                    processListMessage((MessageStoC_List) msg);
+                } else if (msg instanceof MessageStoC_Private) {
+                    processPrivateMessage((MessageStoC_Private) msg);
                 } else if (msg instanceof MessageStoC_Exit) {
                     processExitMessage((MessageStoC_Exit) msg);
                 } else {
