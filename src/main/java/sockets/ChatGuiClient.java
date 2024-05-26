@@ -81,6 +81,7 @@ public class ChatGuiClient extends Application {
         listView.setEditable(false);
         listView.setItems(names);
         names.add("Example name");
+        System.out.println("DEBUG: " + names);
         listView.setCellFactory(param -> new RadioListCell());
         borderPane.setLeft(listView);
 

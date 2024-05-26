@@ -41,8 +41,8 @@ public class ChatGuiSocketListener implements Runnable {
             });
             // TODO: update radio buttons
             chatGuiClient.getNames().add(m.userName);
-            listView.setCellFactory(param -> new RadioListCell());
-            borderPane.setLeft(listView);
+            // listView.setCellFactory(param -> new RadioListCell());
+            // borderPane.setLeft(listView);
         }
     }
 
