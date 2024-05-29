@@ -32,15 +32,24 @@ public class ChatGuiSocketListener implements Runnable {
                 chatGuiClient.getTextInput().setEditable(true);
                 chatGuiClient.getSendButton().setDisable(false);
                 chatGuiClient.getMessageArea().appendText("Welcome to the chat, " + username + "\n");
+
+                chatGuiClient.getNames().clear();
+                for (String u : m.userList) {
+                    chatGuiClient.getNames().add(u);
+                }
             });
         }
 
         else {
             Platform.runLater(() -> {
                 chatGuiClient.getMessageArea().appendText(m.userName + " joined the chat!\n");
+                chatGuiClient.getNames().clear();
+                for (String u : m.userList) {
+                    chatGuiClient.getNames().add(u);
+                }
             });
             // TODO: update radio buttons
-            chatGuiClient.getNames().add(m.userName);
+            // chatGuiClient.getNames().add(m.userName);
             // listView.setCellFactory(param -> new RadioListCell());
             // borderPane.setLeft(listView);
         }
@@ -63,8 +72,17 @@ public class ChatGuiSocketListener implements Runnable {
     private void processExitMessage(MessageStoC_Exit m) {
         Platform.runLater(() -> {
             chatGuiClient.getMessageArea().appendText(m.userName + " has left the chat!\n");
+            
+            chatGuiClient.getNames().clear();
+            for (String u : m.userList) {
+                chatGuiClient.getNames().add(u);
+            }
         });
     }
+
+    // public String getUsername() {
+    //     return username;
+    // }
 
     public void run() {
         try {

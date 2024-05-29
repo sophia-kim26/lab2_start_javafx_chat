@@ -41,6 +41,7 @@ public class ChatGuiClient extends Application {
 
     private Stage stage;
     private TextArea messageArea;
+    private ListView<String> listView = new ListView<>();
     private TextField textInput;
     private Button sendButton;
 
@@ -76,11 +77,10 @@ public class ChatGuiClient extends Application {
         borderPane.setCenter(messageArea);
 
         // active user list
-        final ListView<String> listView = new ListView<>();
+        // final ListView<String> listView = new ListView<>();
         listView.setPrefSize(200, 250);
         listView.setEditable(false);
         listView.setItems(names);
-        names.add("Example name");
         System.out.println("DEBUG: " + names);
         listView.setCellFactory(param -> new RadioListCell());
         borderPane.setLeft(listView);
@@ -175,6 +175,10 @@ public class ChatGuiClient extends Application {
 
     public TextArea getMessageArea() {
         return messageArea;
+    }
+
+    public ListView getListView() {
+        return listView;
     }
 
     public TextField getTextInput() {

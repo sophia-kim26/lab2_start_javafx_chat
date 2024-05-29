@@ -3,6 +3,7 @@ package sockets;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChatServerSocketListener  implements Runnable {
@@ -46,9 +47,14 @@ public class ChatServerSocketListener  implements Runnable {
             MessageCtoS_Join joinMessage = (MessageCtoS_Join)in.readObject();
             client.setUserName(joinMessage.userName);
 
+            ArrayList<String> userList = new ArrayList<>();
+            for (ClientConnectionData c : clientList) {
+                userList.add(c.getUserName());
+            }
+
             // Broadcast the welcome back to the client that joined. 
             // Their UI can decide what to do with the welcome message.
-            broadcast(new MessageStoC_Welcome(joinMessage.userName), null);
+            broadcast(new MessageStoC_Welcome(joinMessage.userName, userList ), null);
             
             while (true) {
                 Message msg = (Message) in.readObject();
@@ -75,7 +81,12 @@ public class ChatServerSocketListener  implements Runnable {
             clientList.remove(client); 
 
             // Notify everyone that the user left.
-            broadcast(new MessageStoC_Exit(client.getUserName()), client);
+            ArrayList<String> userList = new ArrayList<>();
+            for (ClientConnectionData c : clientList) {
+                userList.add(c.getUserName());
+            }
+
+            broadcast(new MessageStoC_Exit(client.getUserName(), userList), client);
 
             try {
                 client.getSocket().close();

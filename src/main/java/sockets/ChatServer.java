@@ -40,7 +40,6 @@ public class ChatServer {
                     clientList.add(client);
 
                     System.out.println("added client " + name);
-                    // chatGuiClient.getNames().add(name);
 
                     // handle client business in another thread
                     pool.execute(new ChatServerSocketListener(client, clientList));
