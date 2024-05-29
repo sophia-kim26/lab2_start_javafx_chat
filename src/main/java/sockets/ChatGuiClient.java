@@ -29,6 +29,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class ChatGuiClient extends Application {
@@ -76,14 +77,32 @@ public class ChatGuiClient extends Application {
         messageArea.setEditable(false);
         borderPane.setCenter(messageArea);
 
+        // im ngl i searched up how to add a button idk if this is correct
+        VBox vbox = new VBox();
+        vbox.setSpacing(5);
+        vbox.setPadding(new Insets(10, 10, 10, 10));
+        
+        Button kickButton = new Button("Kick");
+        kickButton.setOnAction(e -> {
+            // action for button
+        });
+
+        Button pMessageButton = new Button("Private Message");
+        pMessageButton.setOnAction(e -> {
+            // action for button
+        });
+
         // active user list
         // final ListView<String> listView = new ListView<>();
-        listView.setPrefSize(200, 250);
+        listView.setPrefSize(200, 400);
         listView.setEditable(false);
         listView.setItems(names);
         System.out.println("DEBUG: " + names);
         listView.setCellFactory(param -> new RadioListCell());
         borderPane.setLeft(listView);
+
+        vbox.getChildren().addAll(kickButton, pMessageButton, listView);
+        borderPane.setLeft(vbox);
 
         // At first, can't send messages - wait for WELCOME!
         textInput = new TextField();
