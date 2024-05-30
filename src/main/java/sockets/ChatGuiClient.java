@@ -170,7 +170,7 @@ public class ChatGuiClient extends Application {
             String[] tokens = msg.split(" ", 3);
             if (tokens.length == 3) {
                 sendMessage(new MessageCtoS_Private(tokens[1], tokens[2]));
-                messageArea.appendText("private message to " + tokens[1] + ": " + tokens[2] + "\n");
+                messageArea.appendText("Private message to " + tokens[1] + ": " + tokens[2] + "\n");
             }
             else {
                 messageArea.appendText("invalid format for /private\n");

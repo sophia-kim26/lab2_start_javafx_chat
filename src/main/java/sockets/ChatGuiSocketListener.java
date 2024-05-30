@@ -70,7 +70,7 @@ public class ChatGuiSocketListener implements Runnable {
     private void processListMessage(MessageStoC_List m) {
         // System.out.println("current users: " + m);
         Platform.runLater(() -> {
-            chatGuiClient.getMessageArea().appendText("current users: " + m);
+            chatGuiClient.getMessageArea().appendText("Current users: " + m);
         });
     }
 
