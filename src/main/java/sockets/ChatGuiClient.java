@@ -87,10 +87,10 @@ public class ChatGuiClient extends Application {
             sendMessage(new MessageCtoS_Kick(((RadioButton)group.getSelectedToggle()).getText()));
         });
 
-        Button pMessageButton = new Button("Private Message");
-        pMessageButton.setOnAction(e -> {
-            // action for button
-        });
+        // Button pMessageButton = new Button("Private Message");
+        // pMessageButton.setOnAction(e -> {
+        //     // action for button
+        // });
 
         // active user list
         // final ListView<String> listView = new ListView<>();
@@ -101,7 +101,8 @@ public class ChatGuiClient extends Application {
         listView.setCellFactory(param -> new RadioListCell());
         borderPane.setLeft(listView);
 
-        vbox.getChildren().addAll(kickButton, pMessageButton, listView);
+        vbox.getChildren().addAll(kickButton, listView);
+        // vbox.getChildren().addAll(kickButton, pMessageButton, listView);
         borderPane.setLeft(vbox);
 
         // At first, can't send messages - wait for WELCOME!
