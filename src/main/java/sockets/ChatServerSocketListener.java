@@ -22,6 +22,40 @@ public class ChatServerSocketListener  implements Runnable {
         broadcast(new MessageStoC_Chat(client.getUserName(), m.msg), null);
     }
 
+    private void processListMessage(MessageCtoS_List m) {
+        System.out.println("List request from " + client.getUserName());
+        ArrayList<String> userList = new ArrayList<>();
+        for (ClientConnectionData c : clientList) {
+            userList.add(c.getUserName());
+        }
+        try {
+            client.getOut().writeObject(new MessageStoC_List(userList));
+        } catch (IOException ex) {
+            System.out.println("list request caught exception: " + ex);
+        }
+    }
+
+    private void processPrivateMessage(MessageCtoS_Private m) {
+        // TODO
+        System.out
+                .println("Private message from " + client.getUserName()
+                        + " to " + m.recipientUserName + ": " + m.msg);
+        for (ClientConnectionData c : clientList) {
+            if (c.getUserName().equals(m.recipientUserName)) {
+                try {
+                    c.getOut().writeObject(new MessageStoC_Private(client.getUserName(), m.msg));
+                } catch (IOException ex) {
+                    System.out.println("private message request caught exception: " + ex);
+                }
+                return;
+            }
+        }
+        System.out.println("invalid recipient - no user with that username exists");
+        // client.getOut().writeObject(new MessageStoC_Chat(client.getUserName(),
+        //         "Your private message to " + m.recipientUserName + " could not be delivered"));
+        
+    }
+
     private void processKickMessage(MessageCtoS_Kick m) {
         // System.out.println("broadcasting: Kick action from " + client.getUserName() + " to " + m.kickee);
         broadcast(new MessageStoC_Kick(client.getUserName(), m.kickee), null);
@@ -85,6 +119,12 @@ public class ChatServerSocketListener  implements Runnable {
                 }
                 else if (msg instanceof MessageCtoS_Chat) {
                     processChatMessage((MessageCtoS_Chat) msg);
+                }
+                else if (msg instanceof MessageCtoS_List) {
+                    processListMessage((MessageCtoS_List) msg);
+                }
+                else if (msg instanceof MessageCtoS_Private) {
+                    processPrivateMessage((MessageCtoS_Private) msg);
                 }
                 else if (msg instanceof MessageCtoS_Kick) {
                     processKickMessage((MessageCtoS_Kick) msg);

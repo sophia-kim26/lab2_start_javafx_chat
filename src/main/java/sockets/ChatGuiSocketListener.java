@@ -68,11 +68,17 @@ public class ChatGuiSocketListener implements Runnable {
     }
 
     private void processListMessage(MessageStoC_List m) {
-        System.out.println("current users: " + m);
+        // System.out.println("current users: " + m);
+        Platform.runLater(() -> {
+            chatGuiClient.getMessageArea().appendText("current users: " + m);
+        });
     }
 
     private void processPrivateMessage(MessageStoC_Private m) {
-        System.out.println("private chat message from " + m);
+        // System.out.println("private chat message from " + m);
+        Platform.runLater(() -> {
+            chatGuiClient.getMessageArea().appendText(m + " (Private): " + m.msg + "\n");
+        });
     }
 
     private void processExitMessage(MessageStoC_Exit m) {

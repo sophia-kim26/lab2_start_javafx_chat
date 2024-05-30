@@ -10,6 +10,7 @@ public class MessageStoC_Private extends Message {
     }
 
     public String toString() {
-        return fromUserName + ": " + msg;
+        // return fromUserName + ": " + msg;
+        return fromUserName;
     }
 }
