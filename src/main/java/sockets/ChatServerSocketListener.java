@@ -73,7 +73,6 @@ public class ChatServerSocketListener  implements Runnable {
             for (ClientConnectionData c : clientList) {
                 userList.add(c.getUserName());
             }
-            userList.add("Everyone");
 
             // Broadcast the welcome back to the client that joined. 
             // Their UI can decide what to do with the welcome message.

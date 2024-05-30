@@ -41,6 +41,7 @@ public class ChatGuiSocketListener implements Runnable {
                         chatGuiClient.getNames().add(u);
                     }
                 }
+                chatGuiClient.getNames().add("Everyone");
             });
         }
 
@@ -54,6 +55,7 @@ public class ChatGuiSocketListener implements Runnable {
                         chatGuiClient.getNames().add(u);
                     }
                 }
+                chatGuiClient.getNames().add("Everyone");
             });
             // TODO: update radio buttons
         }
