@@ -157,6 +157,7 @@ public class ChatGuiClient extends Application {
 
     private void sendChatMessage() {
         String msg = textInput.getText().trim();
+        String selected = ((RadioButton)group.getSelectedToggle()).getText();
         if (msg.length() == 0) {
             return;
         }
@@ -166,15 +167,10 @@ public class ChatGuiClient extends Application {
             Platform.exit();
         } else if (msg.toLowerCase().startsWith("/list")) {
             sendMessage(new MessageCtoS_List());
-        } else if (msg.toLowerCase().startsWith("/private")) {
-            String[] tokens = msg.split(" ", 3);
-            if (tokens.length == 3) {
-                sendMessage(new MessageCtoS_Private(tokens[1], tokens[2]));
-                messageArea.appendText("Private message to " + tokens[1] + ": " + tokens[2] + "\n");
-            }
-            else {
-                messageArea.appendText("invalid format for /private\n");
-            }
+        // TODO
+        } else if (!selected.equals("Everyone")) {
+            sendMessage(new MessageCtoS_Private(selected, msg));
+            messageArea.appendText("Private message to " + selected + ": " + msg + "\n");
         } else {
             sendMessage(new MessageCtoS_Chat(msg));
         }
