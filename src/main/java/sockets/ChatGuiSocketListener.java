@@ -78,11 +78,15 @@ public class ChatGuiSocketListener implements Runnable {
     private void processExitMessage(MessageStoC_Exit m) {
         Platform.runLater(() -> {
             chatGuiClient.getMessageArea().appendText(m.userName + " has left the chat!\n");
-            
+
             chatGuiClient.getNames().clear();
-            for (String u : m.userList) {
-                chatGuiClient.getNames().add(u);
-            }
+                Collections.sort(m.userList);
+                for (String u : m.userList) {
+                    if (!u.equals(this.username)) {
+                        chatGuiClient.getNames().add(u);
+                    }
+                }
+                chatGuiClient.getNames().add("Everyone");
         });
     }
 
