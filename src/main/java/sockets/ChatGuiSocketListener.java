@@ -80,6 +80,22 @@ public class ChatGuiSocketListener implements Runnable {
         });
     }
 
+    private void processKickMessage(MessageStoC_Kick m) {
+        if (m.kickee.equals(username)) {
+            Platform.runLater(() -> {
+                chatGuiClient.getStage().close();
+                appRunning = false;
+                Platform.exit();
+            });
+        }
+        else {
+            Platform.runLater(() -> {
+                chatGuiClient.getMessageArea().appendText(m.kicker + " kicked " + m.kickee + "\n");
+                chatGuiClient.getNames().remove(m.kickee);
+            });
+        }
+    }
+
     // public String getUsername() {
     //     return username;
     // }
@@ -114,6 +130,8 @@ public class ChatGuiSocketListener implements Runnable {
                     processPrivateMessage((MessageStoC_Private) msg);
                 } else if (msg instanceof MessageStoC_Exit) {
                     processExitMessage((MessageStoC_Exit) msg);
+                } else if (msg instanceof MessageStoC_Kick) {
+                    processKickMessage((MessageStoC_Kick) msg);
                 } else {
                     System.out.println("Unhandled message type: " + msg.getClass());
                 }

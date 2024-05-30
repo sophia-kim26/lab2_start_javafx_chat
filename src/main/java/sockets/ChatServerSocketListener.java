@@ -6,6 +6,8 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.scene.control.RadioButton;
+
 public class ChatServerSocketListener  implements Runnable {
     private ClientConnectionData client;
     private List<ClientConnectionData> clientList;
@@ -18,6 +20,26 @@ public class ChatServerSocketListener  implements Runnable {
     private void processChatMessage(MessageCtoS_Chat m) {
         System.out.println("Chat received from " + client.getUserName() + " - broadcasting");
         broadcast(new MessageStoC_Chat(client.getUserName(), m.msg), null);
+    }
+
+    private void processKickMessage(MessageCtoS_Kick m) {
+        // System.out.println("broadcasting: Kick action from " + client.getUserName() + " to " + m.kickee);
+        broadcast(new MessageStoC_Kick(client.getUserName(), m.kickee), null);
+        
+        ClientConnectionData kickee = null;
+        for (ClientConnectionData c : clientList) {
+            if (c.getUserName().equals(m.kickee)) {
+                kickee = c;
+                break;
+            }
+        }
+        try {
+            kickee.getOut().writeObject(new MessageStoC_Kick(client.getUserName(), m.kickee));
+            kickee.getSocket().close();
+            clientList.remove(kickee);
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -63,6 +85,9 @@ public class ChatServerSocketListener  implements Runnable {
                 }
                 else if (msg instanceof MessageCtoS_Chat) {
                     processChatMessage((MessageCtoS_Chat) msg);
+                }
+                else if (msg instanceof MessageCtoS_Kick) {
+                    processKickMessage((MessageCtoS_Kick) msg);
                 }
                 else {
                     System.out.println("Unhandled message type: " + msg.getClass());

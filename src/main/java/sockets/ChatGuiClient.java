@@ -84,7 +84,7 @@ public class ChatGuiClient extends Application {
         
         Button kickButton = new Button("Kick");
         kickButton.setOnAction(e -> {
-            // action for button
+            sendMessage(new MessageCtoS_Kick(((RadioButton)group.getSelectedToggle()).getText()));
         });
 
         Button pMessageButton = new Button("Private Message");
@@ -94,10 +94,10 @@ public class ChatGuiClient extends Application {
 
         // active user list
         // final ListView<String> listView = new ListView<>();
-        listView.setPrefSize(200, 400);
+        listView.setPrefSize(150, 400);
         listView.setEditable(false);
         listView.setItems(names);
-        System.out.println("DEBUG: " + names);
+        // System.out.println("DEBUG: " + names);
         listView.setCellFactory(param -> new RadioListCell());
         borderPane.setLeft(listView);
 
