@@ -50,15 +50,12 @@ public class ChatGuiSocketListener implements Runnable {
                 chatGuiClient.getNames().clear();
                 Collections.sort(m.userList);
                 for (String u : m.userList) {
-                    if (!this.username.equals(user)) {
+                    if (!u.equals(this.username)) {
                         chatGuiClient.getNames().add(u);
                     }
                 }
             });
             // TODO: update radio buttons
-            // chatGuiClient.getNames().add(m.userName);
-            // listView.setCellFactory(param -> new RadioListCell());
-            // borderPane.setLeft(listView);
         }
     }
 
