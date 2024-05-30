@@ -1,6 +1,7 @@
 package sockets;
 
 import java.io.ObjectInputStream;
+import java.util.Collections;
 import java.util.Optional;
 
 import javafx.application.Platform;
@@ -34,8 +35,11 @@ public class ChatGuiSocketListener implements Runnable {
                 chatGuiClient.getMessageArea().appendText("Welcome to the chat, " + username + "\n");
 
                 chatGuiClient.getNames().clear();
+                Collections.sort(m.userList);
                 for (String u : m.userList) {
-                    chatGuiClient.getNames().add(u);
+                    if (!u.equals(user)) {
+                        chatGuiClient.getNames().add(u);
+                    }
                 }
             });
         }
@@ -44,8 +48,11 @@ public class ChatGuiSocketListener implements Runnable {
             Platform.runLater(() -> {
                 chatGuiClient.getMessageArea().appendText(m.userName + " joined the chat!\n");
                 chatGuiClient.getNames().clear();
+                Collections.sort(m.userList);
                 for (String u : m.userList) {
-                    chatGuiClient.getNames().add(u);
+                    if (!this.username.equals(user)) {
+                        chatGuiClient.getNames().add(u);
+                    }
                 }
             });
             // TODO: update radio buttons
